@@ -27,7 +27,3 @@ class TestCurrency(TestCase):
             currencyConverter = currency._CurrencyConverter.download()
         except Exception:
             self.fail('The converter failed to be initialised by download.')
-
-
-if __name__ == '__main__':
-    main()
