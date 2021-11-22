@@ -43,6 +43,6 @@ class Price(object):
         Example
         -------
             >>> Price(1., 'USD').convert('GBP', date=datetime.date(2010, 5, 7))
-            0.74 GBP            
+            0.74 GBP
         """
-        return Price(self.value * getExchangeRate(self.currency, currency), currency)
+        return Price(self.value * getExchangeRate(self.currency, currency, date=date), currency)

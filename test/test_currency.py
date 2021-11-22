@@ -1,5 +1,5 @@
 import datetime
-from unittest import TestCase, main
+from unittest import TestCase
 import currency
 
 
@@ -9,8 +9,8 @@ class TestCurrency(TestCase):
         "Tests the ability to retrieve a global (singleton) instance of the currency converter."
         currency.CURRENCY_CONVERTER = None
         currencyConverter = currency._getCurrencyConverter()
-        self.assertEquals(currencyConverter, currency.CURRENCY_CONVERTER, 'Once the currency converter is retrieved the first time, it should be stored in a global variable.')
-        self.assertEquals(currencyConverter, currency._getCurrencyConverter(), 'Once the currency converter is requested a second time, it should return the original instance.')
+        self.assertEqual(currencyConverter, currency.CURRENCY_CONVERTER, 'Once the currency converter is retrieved the first time, it should be stored in a global variable.')
+        self.assertEqual(currencyConverter, currency._getCurrencyConverter(), 'Once the currency converter is requested a second time, it should return the original instance.')
 
     def test_getExchangeRate(self):
         """Tests the ability of retrieving the correct exchange rate (latest and for a date)
@@ -24,6 +24,6 @@ class TestCurrency(TestCase):
 
     def test_download(self):
         try:
-            currencyConverter = currency._CurrencyConverter.download()
+            _ = currency._CurrencyConverter.download()
         except Exception:
             self.fail('The converter failed to be initialised by download.')
