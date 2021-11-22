@@ -86,7 +86,7 @@ class _CurrencyConverter(object):
         date = date.strftime('%Y-%m-%d') if date else table.iloc[-1][DATE_COLUMN_NAME]
         table = table[table[DATE_COLUMN_NAME] == date].dropna()
         if len(table) != 1:
-            raise RuntimeError('No exchange rate could be found for %s and %s on %s.', baseCurrency, targetCurrency, date)
+            raise RuntimeError('No exchange rate could be found for %s and %s on date %s.', baseCurrency, targetCurrency, date)
 
         # Determine the exchange rate;
         entry = table.iloc[0]
