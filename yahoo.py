@@ -35,7 +35,6 @@ def sendRequest(URL, useCache=True):
 
 
 def _doSendRequest(URL):
-    print(1)
     return requests.get(URL, headers=_HEADERS).json()
 
 

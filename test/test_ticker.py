@@ -6,7 +6,27 @@ from ticker import Ticker, validateSymbol, AmbiguousTickerException, TickerNotFo
 
 
 class TestTicker(TestCase):
+    
+    def test_getPrice(self):
 
+        """Validate that a ticker's history can be retreieved."""
+
+        response = {
+            'chart': {
+                'result': [
+                    {
+                        'meta': {'currency': 'GBP', 'regularMarketPrice': 42.17},
+                    },
+                ]
+            }
+        }
+
+        with mock.patch('yahoo.sendRequest', return_value=response), mock.patch('ticker.validateSymbol'):
+
+            self.assertEquals(
+                Ticker('YEET').getPrice(),
+                Price(42.17, 'GBP')
+            )
 
     def test_getHistory(self):
 

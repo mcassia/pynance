@@ -22,6 +22,24 @@ class Ticker:
     def __repr__(self):
         return f'Ticker(symbol={self.symbol})'
 
+    def getPrice(self):
+
+        """
+        Returns the current market price for the ticker.
+
+        Return
+        ------
+            Price
+        """
+
+        URL = f'https://query1.finance.yahoo.com/v8/finance/chart/{self.symbol}?region=US&lang=en-US&includePrePost=false&interval=1m&useYfid=true&range=1d&corsDomain=finance.yahoo.com&.tsrc=finance'
+        response = yahoo.sendRequest(URL)   
+
+        value = response['chart']['result'][0]['meta']['regularMarketPrice']
+        currency = response['chart']['result'][0]['meta']['currency']
+
+        return Price(value, currency)
+
     def getHistory(self, startDate, endDate):
 
         """
@@ -45,6 +63,10 @@ class Ticker:
         dates = map(timestampToDate, timestamps)
 
         values = response['chart']['result'][0]['indicators']['quote'][0]['close']
+        datesAndValues = [(date, value) for date, value in zip(dates, values) if value is not None]
+
+        dates = [i[0] for i in datesAndValues]
+        values = [i[1] for i in datesAndValues]
 
         # Somehow, sometimes, the last value provided is multiplied by a power of 10; the below
         # attempts to detect when this occurs and corrects it. This would fail if the assumption
